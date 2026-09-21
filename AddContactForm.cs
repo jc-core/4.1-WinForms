@@ -1,5 +1,5 @@
 using Assignment4_1.Models;
-
+using static System.Globalization.CultureInfo;                                    
 namespace Assignment4_1 {
     public partial class AddContactForm : Form {
 
@@ -35,13 +35,13 @@ namespace Assignment4_1 {
             }
 
             Person addPerson = new Person();
-            addPerson.FirstName = textBoxFirstName.Text.Trim();
-            addPerson.LastName = textBoxLastName.Text.Trim();
+            addPerson.FirstName = Capitalize(textBoxFirstName.Text).Trim();
+            addPerson.LastName = Capitalize(textBoxLastName.Text).Trim();
             addPerson.MobilePhone = textBoxMobilePhone.Text.Trim();
             addPerson.WorkPhone = textBoxWorkPhone.Text.Trim();
-            addPerson.Street = textBoxStreet.Text.Trim();
-            addPerson.City = textBoxCity.Text.Trim();
-            addPerson.State = textBoxState.Text.Trim().ToUpper();
+            addPerson.Street = AddressFormat(textBoxStreet.Text).Trim();
+            addPerson.City = AddressFormat(textBoxCity.Text).Trim();
+            addPerson.State = textBoxState.Text.ToUpper().Trim();
             addPerson.Zip = textBoxZip.Text.Trim();
 
             if (Data.Contacts.ContainsKey(addPerson.FullName)) {
@@ -85,20 +85,29 @@ namespace Assignment4_1 {
         private void EntryPreview() {
 
             Person preview = new Person() {
-                FirstName = textBoxFirstName.Text,
-                LastName = textBoxLastName.Text,
-                MobilePhone = textBoxMobilePhone.Text,
-                WorkPhone = textBoxWorkPhone.Text,
-                Street = textBoxStreet.Text,
-                City = textBoxCity.Text,
-                State = textBoxState.Text.ToUpper(),
-                Zip = textBoxZip.Text
+                FirstName = Capitalize(textBoxFirstName.Text).Trim(),
+                LastName = Capitalize(textBoxLastName.Text).Trim(),
+                MobilePhone = textBoxMobilePhone.Text.Trim(),
+                WorkPhone = textBoxWorkPhone.Text.Trim(),
+                Street = AddressFormat(textBoxStreet.Text).Trim(),
+                City = AddressFormat(textBoxCity.Text).Trim(),
+                State = textBoxState.Text.ToUpper().Trim(),
+                Zip = textBoxZip.Text.Trim()
             };
 
             lblEntryPreview.Text = preview.Entry;
 
         }
 
+        private string Capitalize(string text) {
+            if (text == "")
+                return text;
+            return char.ToUpper(text[0]) + text.Substring(1);
+        }
+        private string AddressFormat(string text) {
+        
+            return CurrentCulture.TextInfo.ToTitleCase(text.ToLower());
 
+        }
     }
 }

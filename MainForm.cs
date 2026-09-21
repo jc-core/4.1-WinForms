@@ -90,7 +90,7 @@ namespace Assignment4_1 {
             dataGridContacts.DataSource = null;
             dataGridContacts.DataSource = visibleContacts;
 
-            groupBoxCard.Text = visibleContacts.Count == 1 ? "1 contact" : $"{visibleContacts.Count} contacts";
+            contactCardGroupBox.Text = visibleContacts.Count == 1 ? "1 contact" : $"{visibleContacts.Count} contacts";
 
         }
 
